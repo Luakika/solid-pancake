@@ -1,0 +1,25 @@
+---
+title: "Error JSON Reader"
+author: "Alex.A.Murray"
+date: "3/11/2020"
+output: pdf_document
+---
+
+Read in JSON
+```{r}
+library(jsonlite)
+
+json <- read_json(path = "C:/Rasa/converse-3.0.0-rasa_training/train_test_split/tier3_test_data.json", simplifyVector = TRUE)
+
+text <- json$rasa_nlu_data$common_examples$text
+intent <- json$rasa_nlu_data$common_examples$intent
+
+Part1 <- data.frame(text, intent)
+
+colnames(error) <- c("Text", "Correct Intent", "Guess", "Confidence")
+error$Text <- as.character(error$Text)
+rm(test, Part1, Part2)
+```
+
+
+

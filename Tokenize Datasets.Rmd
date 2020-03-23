@@ -1,0 +1,68 @@
+---
+title: "CSV Tokenizer Processing"
+author: "Alex.A.Murray"
+date: "3/2/2020"
+output: pdf_document
+---
+
+#Necessary Packages
+```{#r}
+install.packages("ggplot2")
+install.packages("tidytext")
+install.packages("tidyverse")
+install.packages("dplyr")
+```
+
+```{r}
+library(tidytext)
+library(dplyr)
+
+setwd("C:/Rasa")
+
+file.1 = "C:/Rasa/converse-3.0.0-rasa_training/training_data_generation/Temporary_Storage/raw_master_lowercase_training_data_intentORIGINAL.csv"
+file.2 ="C:/Rasa/converse-2.1.0-rasa_training/training_data_generation/master_data/raw_master_training_data_intent.csv"
+
+file <- "C:/Rasa/converse-3.0.0-rasa_training/training_data_generation/Temporary Storage/Worse Intent.csv"
+```
+
+#Set Datasets
+```{r}
+Train3_data <- read.csv(file.1)
+
+#Text data often imports as factor with levels
+#Change variable to character value to tokenize
+
+Train3_data$UTTERANCE <- as.character(Train3_data$UTTERANCE)
+
+#Train2_data <- read.csv(file.2)
+
+#Text data often imports as factor with levels
+#Change variable to character value to tokenize
+
+
+#Train3_data$VALUE <- as.character(Train3_data$VALUE)
+
+#Train2_data$UTTERANCE <- as.character(Train2_data$UTTERANCE)
+#Train2_data$VALUE <- as.character(Train2_data$VALUE)
+
+rm(file.1,file.2, entity_data, intent_data)
+
+```
+
+#Counts
+```{}
+#Tokenize
+intent_words <- intent_data %>%
+  unnest_tokens(word, UTTERANCE) %>%
+  #Match word to intent and count duplicate instances
+  count(word, INTENT)%>%
+  #Remove Stopwords
+  anti_join(stop_words)
+
+#Sets top words in intent dataset
+top_intent_words <- intent_words %>%
+  top_n(25, n)
+
+```
+
+

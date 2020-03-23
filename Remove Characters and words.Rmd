@@ -1,0 +1,32 @@
+---
+title: "Remove Characters and Words"
+author: "Alex.A.Murray"
+date: "3/12/2020"
+output: pdf_document
+---
+Use after Tokenizing scripts
+
+Train3_data = dataframe to be edited
+
+
+```{r}
+
+Empty <- lapply(Train3_data, gsub, pattern = 'I ', replacement = ' ')
+Empty1 <- lapply(Empty, gsub, pattern = 'i ', replacement = ' ')
+Empty2 <- lapply(Empty1, gsub, pattern = 'â€™', replacement = '')
+Empty3 <- lapply(Empty2, gsub, pattern = 'Â', replacement = '')
+
+NOI <- data.frame(Empty3)
+
+NOI <- lapply(NOI, tolower)
+
+```
+
+Export edited CSV 
+```{r}
+
+write.csv(NOI , "C:/Rasa/converse-3.0.0-rasa_training/training_data_generation/master_data/raw_master_training_data_NOI.csv")
+
+```
+
+
